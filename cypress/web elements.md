@@ -55,3 +55,18 @@ cy.get('#inputEmail3')
   
 cy.contains('nb-card', 'horizontal form').find('[type="email"]');
 ```
+
+## saving subject of the command (then and wrap methods)
+
+methods:
+- **should**
+```
+cy.contains('nb-card', 'using the grid').find('[for="inputEmail1"').should('contain', 'email')
+```
+***You can not save the result value of cy.contains() because cypress is asynchronous***
+```
+// does not work  
+  const firstForm = cy.contains('nb-card', 'using the grid')
+  firstForm.find('[for="inputEmail1"').should('contain', 'email')
+}
+```
