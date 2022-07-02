@@ -88,6 +88,8 @@ cy.wrap(firstFrom).find('[for="inputEmail1"').should('contain', 'email')
 
 ## Invoke command
 for using jquery method from cypress object
+can be useful for:
+- **getting attributes values**
 ```
 cy.get('[for="exampleInputEmail1"]').invoke('text').then(text => {
   expect(text).to.equal('Email address');
@@ -98,7 +100,33 @@ cy.contains('nb-card', 'basic form)
   .click()
   .find('.custom-checkbox')
   .invoke('attr','class')
+  //.should('contain','checked')
   .then(classValue => {
     expect(classValues).to.contain('checked')
   })
+```
+- **getting value for an input field**
+```
+cy.contains('nb-card', 'Common Datepicker').find('input').then( input => {
+  cy.wrap(input).click()
+  cy.get('nb-calendar-day-picker').contains('17').click()
+  cy.wrap(input).invoke('prop', 'value').should('contain', 'Dec 17, 2019')
+  
+})
+```
+## Radiobuttons and checkboxes
+command: **check()** // only check checkbox, but not uncheck if it's checked
+for uncheck use **click()** method
+**first()** // for array of elements
+```
+cy.contains('nb-card', "Using the Grid").find('[type="radio"]').then(radioButtons => {
+  cy.wrap(radioButtons)
+    .first()
+    .check({force: true})   // {force: true} disable cypress default check for element to be visible
+    .should('be.checked')
+    
+  cy.wrap(radioButtons).eq(1).check({force: true}) // check the second radio button
+  cy.wrap(radioButtons).eq(0).should('not.be.checked')
+  cy.wrap(radioButtons).eq(2).should('be.disabled')
+})
 ```
