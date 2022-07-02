@@ -85,3 +85,20 @@ We can swith from Jquery object to cypress objects using function
 ```
 cy.wrap(firstFrom).find('[for="inputEmail1"').should('contain', 'email')
 ```
+
+## Invoke command
+for using jquery method from cypress object
+```
+cy.get('[for="exampleInputEmail1"]').invoke('text').then(text => {
+  expect(text).to.equal('Email address');
+})
+
+cy.contains('nb-card', 'basic form)
+  .find('nb-checkbox')
+  .click()
+  .find('.custom-checkbox')
+  .invoke('attr','class')
+  .then(classValue => {
+    expect(classValues).to.contain('checked')
+  })
+```
