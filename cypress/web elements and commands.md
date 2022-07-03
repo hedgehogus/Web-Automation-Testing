@@ -121,6 +121,7 @@ cy.contains('nb-card', 'Common Datepicker').find('input').then( input => {
 command: **check()** // only check checkbox, but not uncheck if it's checked
 for uncheck use **click()** method
 **first()** // for array of elements
+**eq()** // find element in array by index
 ```
 cy.contains('nb-card', "Using the Grid").find('[type="radio"]').then(radioButtons => {
   cy.wrap(radioButtons)
@@ -145,6 +146,7 @@ cy.get('nb-layout-header nav').should('have.css', 'background-color', 'rgb(43,43
 `cy.get('nav nb-select').should('contain', 'Dark')
 ```
 **check all options in dropdown menu**
+- **each()** command
 ```
 cy.get('nav nb-select').then( dropdown => {
   cy.wrap(dropdown).click()
@@ -160,6 +162,36 @@ cy.get('nav nb-select').then( dropdown => {
   })
 })
 ```
-**select()** command
+- **select()** command
 - works only when your tag name is **select**
 - option can be selected not only by a text, but also by value
+
+## Web tables
+- **clear()** // clear input
+- **type()** // set value to input
+- **wait()** // set timeout
+```
+cy.get('tbody').contains('tr', 'Larry').then((tableRow) => {
+  cy.wrap(tableRow).find('.nb-edit').click()
+  cy.wrap(tableRow).find('[placeholder="Age"]').clear().type('25') // clear input and set value to input
+  cy.wrap(tableRow).find('.nb-checkmark').click()
+  
+  cy.wrap(tableRow).find('td').eq(6).should('contain','25')  
+  
+  cy.wait(500)  
+})
+``` 
+```
+const age = [20,30,40, 200]
+cy.wrap(age).each( age => {
+  cy.get('thead' [placeholder="Age"]').clear().type(age)
+  cy.wait(500)
+  cy.get('tbody tr').each(tableRow => {
+    if (age === 200) {
+      cy.wrap(tableRow).should('contain', 'No data found') 
+    } else {
+      cy.wrap(tableRow).find('td').eq(6).should('contain', age)
+    }
+  })
+})
+```
