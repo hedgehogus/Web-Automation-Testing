@@ -162,4 +162,4 @@ cy.get('nav nb-select').then( dropdown => {
 ```
 **select()** command
 - works only when your tag name is **select**
-- option can be selected not only by a text, but also by <value>
+- option can be selected not only by a text, but also by value
