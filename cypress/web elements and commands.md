@@ -34,8 +34,11 @@
 //by tag name, attribute with value, Id and class name
    ``cy.get('input[placeholder="Email"]#inputEmail.input-full-width');``
    
-//The most recommended way by cypress
-  ``cy.get('[data-cy="inputEmail1"]');``
+//**The most recommended way by cypress
+  ``cy.get('[data-cy="inputEmail1"]');``**
+  
+//The child element of some element
+  ``cy.get('nav nb-select');``
 
 ## Finding web elements
 ```
@@ -130,3 +133,33 @@ cy.contains('nb-card', "Using the Grid").find('[type="radio"]').then(radioButton
   cy.wrap(radioButtons).eq(2).should('be.disabled')
 })
 ```
+## Lists and dropdowns 
+
+```
+cy.get('options-list').contains('Dark').click()
+
+// check if have proper css style
+cy.get('nb-layout-header nav').should('have.css', 'background-color', 'rgb(43,43,69)')
+
+// check if have proper text content
+`cy.get('nav nb-select').should('contain', 'Dark')
+```
+**check all options in dropdown menu**
+```
+cy.get('nav nb-select').then( dropdown => {
+  cy.wrap(dropdown).click()
+  cy.get('.options-list nb-options').each((listItem, index) => {
+    const itemText = listItem.text().trim() // trim() for removing trailing backspaces
+    
+    cy.wrap(listItem).click()
+    cy.wrap.(dropdown).should('contain', itemText)
+    
+    if (index < 3) {
+      cy.wrap(dropdown).click()
+    }
+  })
+})
+```
+**select()** command
+- works only when your tag name is **select**
+- option can be selected not only by a text, but also by <value>
